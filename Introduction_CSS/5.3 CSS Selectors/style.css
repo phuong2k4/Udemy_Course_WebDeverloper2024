@@ -1,0 +1,30 @@
+ol {
+  margin-left: -40px;
+  margin-top: -20px;
+  list-style-position: inside;
+}
+
+/* Write your CSS below, don't change the rules above. */
+.note{
+  color: red;
+}
+
+.note[value= "2"]{
+  color: black;
+  font-size: 20px;
+}
+
+.note#id-selector-demo{
+  color: green;
+}
+.note[value= "4"]{
+  color: blue;
+}
+.note[value= "5"]{
+  color: black;
+
+}
+
+* {
+  text-align: center;
+}
