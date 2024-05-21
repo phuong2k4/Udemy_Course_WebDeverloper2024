@@ -4,15 +4,15 @@ h1, h2{
     color: #8A2BE2;
 }
 
-.box p.done {
+.box > p {
     color: #B22222;
 }
 
-.box .list li{
+.list li{
     color: blue;
 }
 
-.box .list li.done{
+.list .done{
     color: green;
 }
 
