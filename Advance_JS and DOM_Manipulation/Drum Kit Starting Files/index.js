@@ -53,10 +53,10 @@ function makesound(key){
 
 function buttonAnimation(key){
     var keyButton = document.querySelector("."+ key)
-    var class1 = ["pressed"]
     keyButton.classList.add("pressed")
-    
     setTimeout(function(){
         keyButton.classList.remove("pressed")
-    },300)
+            },
+        300
+    )
 }
