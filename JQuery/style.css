@@ -7,3 +7,10 @@
 body{
     background-color: blanchedalmond;
 }
+
+.big-Title{
+    font-size: 100px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: aquamarine;
+    display: inline-block;
+}
