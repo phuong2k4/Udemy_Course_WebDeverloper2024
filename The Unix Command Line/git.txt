@@ -1,0 +1,37 @@
+//command
+
+(/List file and dirctories/)
+    $ ls 
+'Advance_JS and DOM_Manipulation'/   capstone_1_exampe.html   DOM/      'Intermediate HTML'/        'Introduce Javascript'/   JQuery/                'The Simon Game'/
+ Advanced_CSS/                       capstone_2_exampe.html   Flexbox/  'Intermediate Javascript'/  'Introduction to HTML'/   Multi_Pages_Websites/  'The Unix Command Line'/
+ Bootstrap/                          CSS_Propeties/           Grid/      Intermediate_CSS/           Introduction_CSS/       'The Dicee Game'/
+
+(/change directories/)
+    $ cd Flexbox
+levum@21lvmp MINGW64 /e/Web_Development_2024/Flexbox
+$ls 
+'9.0 Display Flex'/   9.1+Flex+Direction/   9.4+Flexbox+Pricing+Table+Project/
+
+(/make new directories/)
+    $mkdir /nameNfolder/
+
+(/create new file/)
+    $touch /nameNfile/
+
+(/remove file/)
+    $rm /namefile/
+
+(/remove all file in folder working directory/)
+    $rm *
+
+(/remove directory/)
+    $rm -r /namefolder/
+
+(/open file and edit/)
+    $start /namefile/
+
+(/open in vs code to edit/)
+    $code /namefile/
+
+(/print working directory)
+    $pwd
