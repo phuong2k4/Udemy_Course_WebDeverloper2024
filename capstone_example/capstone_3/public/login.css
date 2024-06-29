@@ -1,0 +1,38 @@
+.content{
+    height: 65vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:50px;
+}
+
+.title-form{
+    font-size: 50px;
+    text-align: left;
+}
+
+form{
+    width: 450px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:10px 0 0 90px;
+    background-color: #EEEEEE;
+    opacity: 0.9;
+    gap: 20px;
+    color:black;
+    font-size: 20px;
+}
+
+input[type = "submit"] {
+    width: 120px;
+    height: 50px;
+    background-color: #0f60da;
+    border: none;
+    border-radius: 10px;
+    color: aliceblue;
+}
+input[type = "button"]:hover{
+    background-color: #07439c;
+}

@@ -1,0 +1,19 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="content">
+        <div class="title-form">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, vitae nulla earum eligendi impedit doloribus consectetur architecto.
+        </div>
+        <form action="/submit" method="POST">
+            <label for="">Sign in Option</label>
+            <input type="text" name="email" placeholder="Email address">
+            <input type="password" name="password" placeholder="Password">
+            <div class="remember">
+                <input type="checkbox" name="checkremem" placeholder="Remember me" value="Remember me">
+                <label for="">Remember Me</label>
+            </div>
+            <input type="submit" value="Sign In" >
+        </form>
+    </div>
+    
+<%- include("partials/footer.ejs") %>
