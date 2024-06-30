@@ -1,0 +1,12 @@
+#---------                         gitignore                     ---------#
+
+--remove all of commit before
+---git rm --cached -r .
+
+--take all old commit when we remove by command above
+-- 2 ways:
+---git reset --hard "abc123"  (abc123 is hash of commit u wanna retake)  
+
+create file .gitignore
+file .gitignore can canceled or block everyfile that you dont want to push or commit because this secret, information and security
+
