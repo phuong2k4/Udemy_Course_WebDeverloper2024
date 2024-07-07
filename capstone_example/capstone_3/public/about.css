@@ -18,12 +18,17 @@
 img{
     width: 390px;
     height: 395px;
-    object-fit: cover;
-}
-img:hover{
     object-fit: contain;
 }
-
+.img1{
+    background-color: #C19BCE;
+}
+.img2{
+    background-color: #faf6f6;
+}
+.img3{
+    background-color: #000000;
+}
 .content-body{
     height: 200px;
     padding: 25px;
