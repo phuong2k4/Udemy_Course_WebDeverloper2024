@@ -8,7 +8,6 @@ const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//1. GET a random joke
 //////// Part 1 axios get 👇
 // var axios = require("axios");
 // var config = {
@@ -25,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 /////// Part 2 axios get 👇
+
 // app.get("/random", async (req,res)=>{
 //   try{
 //     const response = await axios.get("http://localhost:3000/random/")
@@ -37,69 +37,93 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // })
 
 
+//1. GET a random joke
 // method enpoint   callback 
-app.get("/random", (req,res)=>{
-  var random_id_joke = jokes[Math.floor(Math.random() * jokes.length + 1)]
-  res.json(random_id_joke)
+app.get("/random",(req,res)=>{
+  var random_jokes = jokes[Math.floor(Math.random() * jokes.length + 1)]
+  res.json(random_jokes)
 })
+
 //2. GET a specific joke
-app.get("/jokes/:id",(req,res)=>{
-  res.json(jokes[req.params.id-1])
+app.get("/jokes/:id", (request,response)=>{
+  const id = parseInt(request.params.id);
+  const findID = jokes.find((element) => element.id === id);
+  response.json(findID)
 })
 
 //3. GET a jokes by filtering on the joke type
-app.get("/filter", (req,res)=>{
-  const type = req.query.type
-  const result = jokes.filter((typ) => typ.jokeType === type)
-  res.json(result)
+app.get("/filter", (request, response)=>{
+  const type = request.query.type
+  const findType = jokes.filter((element) => element.jokeType === type)
+  response.json(findType)
 })
 //4. POST a new joke
-app.post("/jokes", (req,res)=>{
-  const result = jokes.push(req.body)
-  res.json(result)
+app.post("/jokes/", (request, response)=>{
+  const value = request.body;
+  const add = {
+    id: jokes.length + 1,
+    jokeText: value.jokeText,
+    jokeType: value.jokeType,
+  }
+  var beforeAdd = jokes.push(add)
+  response.json(beforeAdd)
 })
 //5. PUT a joke
-app.put("/jokes/:id",(req,res)=>{
-  const body = req.body
-  const findID = jokes.find((joke)=>joke.id = req.params.id)
-  findID.jokeText = body["jokeText"]
-  findID.jokeType = body["jokeType"]
-  res.json(jokes[findID])
+app.put("/jokes/:id", (request, response)=> {
+  const id = parseInt(request.params.id);
+  const findID = jokes.find((element) => element.id === id)
+  const value = request.body
+  console.log(findID.jokeText)
+  console.log(value["jokeText"])
+  const change = {
+    id: findID,
+    jokeText: findID.jokeText = value["jokeText"],
+    jokeType: findID.jokeType = value["jokeType"] 
+  }
+  // var beforeChange = jokes[change]
+  response.json(response.sendStatus)
 })
 //6. PATCH a joke
-app.patch("/jokes/:id",(req,res)=>{
-  const body = req.body
-  const findID = jokes.find((joke)=>joke.id = req.params.id)
-  findID.jokeText = body["jokeText"] || findID.jokeText
-  findID.jokeType = body["jokeType"] || findID.jokeType
-  res.json(jokes[findID])
+app.patch("/jokes/:id", (request, response)=> {
+  const id = parseInt(request.params.id);
+  const findID = jokes.find((element) => element.id === id)
+  const value = request.body
+  console.log(findID.jokeText)
+  console.log(value["jokeText"])
+  const change = {
+    id: findID,
+    jokeText: findID.jokeText = value["jokeText"] || findID.jokeText,
+    jokeType: findID.jokeType = value["jokeType"] || findID.jokeType
+  }
+  response.json(response.Status)
 })
 //7. DELETE Specific joke
-app.delete("/jokes/:id",(req,res)=>{
-  const id = parseInt(req.params.id)
-  const findID = jokes.find((joke)=> joke.id == id)
-  if(id > -1){
-    jokes.splice(findID,1)
+app.delete("/jokes/:id", (req,res)=>{
+  const id = parseInt(req.params.id);
+  const findID = jokes.findIndex((ele) => ele.id === id);
+  if(findID > -1){
+    jokes.splice(findID, 1);
     res.sendStatus(200)
   }else{
-    res.status(404).json({
-      error: `Cant find id: ${id}, try again!`
-    })
+    res.sendStatus(400).json({error: "Invalue ID, try again!"});
   }
 })
 //8. DELETE All jokes
-app.delete("/all",(req,res)=>{
-  const key = req.query.key
+app.delete("/all", (req,res)=>{
+  const key = req.headers.key
+  // console.log(key)
   if (key === masterKey){
-    jokes = []
-    res.sendStatus(200)
+    jokes = [];
+    res.sendStatus(200).json({message: "Complete delete all jokes."}) 
   }else{
-    res.status(404).json({error: "You had type correct key to Permission"})
+    res.sendStatus(400).json({error: "Invalue key! Try again.."})
   }
+  
 })
-app.listen(port, () => {
-  console.log(`Successfully started server on port ${port}.`);
-});
+
+app.listen(port, ()=>{
+  console.log(`Listen on ${port}`)
+})
 
 var jokes = [
   {
