@@ -23,8 +23,8 @@ app.get("/",(req,res)=>{
 })
 try{
     
-    const api_key1 = "openuv-3i9h12zrlybilrkm-io"
-    const api_key2 = "openuv-3i9h12zrlybs9nj8-io"
+    const api_key1 = ""
+    const api_key2 = ""
     var lat = 51.507351
     var long = -0.127758
     
