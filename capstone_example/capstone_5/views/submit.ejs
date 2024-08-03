@@ -1,0 +1,68 @@
+<!-- <div class="main-book">
+    <div class="main-title">
+        <span class="violet-text">Popular</span> Book course 
+    </div>
+    <div class="card">
+        <div class="img-card">
+            <img src="" alt="">
+        </div>
+        
+        <div class="main-card">
+            <div class="card-title">title</div>
+            <div class="card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. </div>
+            <div class="card-re">Recommend: 4.0/5</div>
+            <div class="card-btn">
+                <div class="card-note">Read my note</div>
+                <button class="card-btn-amazon">amazon.com</button>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+<%- include("partials/header.ejs") %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/submit.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar-submit">
+        <div class="navbar-submit-logo">Logo here</div>
+        <div class="navbar-submit-account">
+            <button class="btn-submit-log">Log In</button>
+            <button class="btn-submit-sign">Sign In</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="main-control">
+            <div class="main-left">
+                <div class="main-title">Bạn có <span>ấn tượng</span>  gì muốn để lại sau khi đọc xong <span>cuốn sách</span> đó không?</div>
+                <div class="main-subtitle">Một tác phẩm hay luôn để lại nhiều dấu ấn, dù câu chuyện có đẹp hay một kết thúc buồn chúng luôn đem lại cảm giác mới lạ....</div>
+            </div>
+            <div class="main-right">
+                <img src="/icon-title.jpg" alt="" class="main-img">
+            </div>
+        </div>
+        <div>
+            <div class="main-below">
+                <div class="main-below-title">kéo xuống dưới để viết cảm nghĩ của mình về nội dung cuốn sách 👇</div>
+            </div>
+        </div>        
+    </div>
+    <div class="main-content">
+        <div class="title">My Note</div>
+        <form action="/add" class="form-main">
+            <input type="text" class="main-inp-note">
+            <button class="main-btn-confirm">Comfirm</button>
+        </form>
+        <div></div>
+    </div>
+</body>
+</html>
+
+
+<%- include('partials/footer.ejs') %>
