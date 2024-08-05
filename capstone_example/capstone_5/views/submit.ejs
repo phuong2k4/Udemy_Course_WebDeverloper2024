@@ -19,7 +19,6 @@
 
     </div>
 </div> -->
-<%- include("partials/header.ejs") %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +43,7 @@
                 <div class="main-subtitle">Một tác phẩm hay luôn để lại nhiều dấu ấn, dù câu chuyện có đẹp hay một kết thúc buồn chúng luôn đem lại cảm giác mới lạ....</div>
             </div>
             <div class="main-right">
-                <img src="/icon-title.jpg" alt="" class="main-img">
+                <img src="<%= locals.img %>" alt="" class="main-img">
             </div>
         </div>
         <div>
@@ -55,7 +54,7 @@
     </div>
     <div class="main-content">
         <div class="title">My Note</div>
-        <form action="/add" class="form-main">
+        <form action="/add" class="form-main" method="post">
             <input type="text" class="main-inp-note">
             <button class="main-btn-confirm">Comfirm</button>
         </form>

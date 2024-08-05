@@ -9,8 +9,15 @@
     </div>
 
     <form action="/submit" method="post" class="form-submit-book">
-        <input type="text" value="" class="main-inp-value" placeholder="Type book here: ">
-        <button class="main-btn-submit">Add Book</button>
+        <input type="text" name="value" class="main-inp-value" placeholder="Type id here: ">
+        <select name="key" id="id-book">
+            <option value="id">ID</option>
+            <option value="isbn">ISBN</option>
+            <option value="oclc">OCLC</option>
+            <option value="lccn">LCCN</option>
+            <option value="olid">OLID</option>
+        </select>
+        <button type="submit" class="main-btn-submit">Add Book</button>
     </form>
     <div></div>
     <div class="main-line-below">

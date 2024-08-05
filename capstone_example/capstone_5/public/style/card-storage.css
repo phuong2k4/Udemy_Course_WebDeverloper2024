@@ -107,7 +107,10 @@ body{
 }
 
 .card-note{
+    font-size: 15px;
     text-decoration: underline;
+    border: none;
+    background-color: #D9D9D9;
 }
 .card-btn{
     padding: 10px;

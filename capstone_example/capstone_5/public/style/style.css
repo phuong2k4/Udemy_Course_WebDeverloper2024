@@ -90,15 +90,16 @@
     gap: 10px;
 }
 .main-inp-value{
-    font-size: 35px;
-    padding: 15px 300px 15px 30px;
+    font-size: 30px;
+    padding: 15px 50px 15px 30px;
     border: 1px solid #6b6b6b;
     border-radius: 10px;
 }
 
 .main-btn-submit{
     padding: 18px 45px;
-    font-size: 30px;
+    font-size:25px;
+    font-weight: bold;
     border: 1px solid #6b6b6b;
     color: white;
     border-radius: 10px;
@@ -186,4 +187,11 @@
     .main-content{
         font-size: 120px;
     }
+}
+
+#id-book{
+    padding: 17px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 10px;
 }
