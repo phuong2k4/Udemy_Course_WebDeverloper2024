@@ -23,46 +23,18 @@ body{
     font-style: italic;
     font-weight: bold;
     color: white;
-    width: 251px; height: 45px; left: 47px; top: 18px; color: #838383; font-size: 30px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word;
-}
-
-.navbar-submit-account{
+    width: 251px; height: 45px;  color: #838383; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word;
     display: flex;
-    gap: 10px;
+    align-items: center;    
 }
 
-.btn-submit-log{
-    padding: 10px 25px ;
+.navbar-submit-user{
+    font-size: 24px;
     color: white;
-    background-color: #005C45;
-    border: 1px solid white;
-    font-size: 15px ;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: .5s ease;
+    display: flex;
+    align-items: center;
+    width: 251px; height: 45px; font-family: Inter; font-style: italic; font-weight: 800; 
 }
-
-.btn-submit-log:hover{
-    background-color: #003b2d;
-    transition: .5s ease;
-}
-.btn-submit-sign{
-    padding: 10px 25px ;
-    color: #6b6b6b;
-    background-color: white;
-    border: 1px solid #6b6b6b;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: bold;
-    transition: .5s ease;
-}
-
-.btn-submit-sign:hover{
-    color: #ffffff;
-    background-color: rgb(100, 100, 100);
-    border: 1px solid #ffffff;
-    transition: .5s ease;
-} 
 
 .main{
     width: 100%;

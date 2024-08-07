@@ -1,8 +1,28 @@
-    <script src="/capstone_example/capstone_5/index.js"></script>
+    
 </body>
 
 <footer>
-    
-</footer>
 
+    <div class="title">Popular Book course</div>
+    <div class="main">
+        <% bookData.forEach((book,ind)=>{ %>
+            <div class="card-container">
+                <img src="<%= book.img %>" alt="" class="card-img">
+                <div class="card-content">
+                    <div class="card-title"><%= book.title %></div>
+                    <div class="card-subtitle"><%= book.subtitle %> </div>
+                    <div class="card-recommend">Recommend: 4.0/5</div>
+                </div>
+                <div class="card-control">
+                    <form action="/note" method="post">
+                        <input type="text" name="index" value="<%= ind +1 %>" class="card-ind">
+                        <button type="submit" class="card-note">Read my note</button> 
+                    </form>
+                    <button class="card-btn"><a href="#" style="text-decoration: none; color: white;">amazon.com</a></button>
+                </div>
+            </div> 
+        <% }) %>
+    </div>
+</footer>
+<script src="/capstone_example/capstone_5/index.js"></script>
 </html>

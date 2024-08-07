@@ -19,9 +19,18 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static("public"))
 const url_book = "https://covers.openlibrary.org/b"
 const url_author = "https://openlibrary.org/api/books"
+
+async function getbook() {
+    const db_book = (await db.query("select * from book_content;")).rows;
+    return db_book;
+}
 app.get("/", async (req, res)=>{
-    res.render("index.ejs")
+    const data = await getbook();
+    res.render("index.ejs" ,{
+        bookData: data
+    })
 })
+
 
 let last_url, last_value, last_key = '', last_note ='', data_book;
 
@@ -38,36 +47,53 @@ app.post("/submit", async (req,res)=>{
             img: `${url_book}/${key}/${value}-S.jpg`
         })
     }catch(err){
-        res.redirect("/")
+        res.redirect("submit.ejs")
         console.log("Can't get api data from this url. Try again!", err.message);
     }
 })
+
+
 app.post("/add", async (req,res)=>{
-    const note = req.body.note;
-    last_note = note;
+    const body = req.body.note;
+    console.log(req.body)
+    last_note = body;
     try{
-        const data = await (await axios.get(`${url_author}?bibkeys=${last_key.toUpperCase()}:${last_value}&jscmd=data&format=json`)).data
-        const result = data[`${last_key.toUpperCase()}:${last_value}`]
+        const data__ = await axios.get(`${url_author}?bibkeys=${last_key.toUpperCase()}:${last_value}&jscmd=data&format=json`)
+        const result = data__.data[`${last_key.toUpperCase()}:${last_value}`];
         data_book = result;
-        res.render("card-storage.ejs", {
-            img: last_url,
-            title: result.title,
-            subtitle: result.subtitle
+        const db_add = await db.query("insert into book_content(img,title,subtitle,note,author) values ($1,$2,$3,$4,$5)",[
+            last_url, result.title, result.subtitle, last_note, result.by_statement
+        ])
+        res.redirect("/")
+    }
+    catch(err){
+        res.render("submit.ejs", {
+            img: last_url
+        })
+        console.log("Query or url error, Try another way...", err.message)
+    }
+})
+app.post("/note", async (req,res)=>{
+    const body = req.body.index;
+    try{
+        const data = (await db.query("select * from book_content where id = ($1)", [body])).rows[0];
+        res.render("book-content.ejs", {
+            subtitle: data.subtitle,
+            title: data.title,
+            author: data.author,
+            content: data.note
         })
     }catch(err){
-        res.redirect("/submit")
-        console.log("Can't get this url. Something went wrong...", err.message)
+        res.redirect("/");
+        console.error("Can not query this code...",err.message)
     }
 })
 
-
-app.post("/note", (req,res)=>{
-    res.render("book-content.ejs",{
-        subtitle: data_book.subtitle,
-        title: data_book.title,
-        author: data_book.authors[0].name,
-        content: last_note
-    })
+app.get("/return", (req,res)=>{
+    res.redirect("/")
+})
+app.get("/note", (req,res)=>{
+    res.redirect("/")
 })
 app.listen(port,()=>{
     console.log(`Running on port http://localhost:${port}`)

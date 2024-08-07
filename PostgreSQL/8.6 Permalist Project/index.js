@@ -29,7 +29,7 @@ async function getItems(){
 }
 
 app.get("/", async (req, res) => {
-  const item = await getItems();
+  const item = await getItems();  
   res.render("index.ejs", {
     listTitle: "Today",
     listItems: item,
