@@ -1,7 +1,6 @@
 {
   "name": "9.0-secrets-project",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,5 +19,7 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
