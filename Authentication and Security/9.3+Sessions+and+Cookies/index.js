@@ -12,12 +12,14 @@ const saltRounds = 10;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+//
 app.use(session({
   secret: 'TOPSECRETWORD',
   resave: false,
   saveUninitialized: true,
   cookie:{
-    maxAge:1000*60*60*24
+    maxAge:1000*60*60*24,
   }
 }))
 
@@ -45,6 +47,7 @@ app.get("/register", (req, res) => {
   res.render("register.ejs");
 });
 
+//
 app.get("/secrets",(req,res)=>{
   if (req.isAuthenticated()){
     res.render("secrets.ejs")
@@ -88,11 +91,13 @@ app.post("/register", async (req, res) => {
   }
 });
 
+//
 app.post("/login", passport.authenticate("local", {
   successRedirect: "/secrets",
   failureRedirect: "/login"
 }));
 
+//
 passport.use(new Strategy( async function verify(username, password, callback){
   console.log(username)
   try {
@@ -121,10 +126,12 @@ passport.use(new Strategy( async function verify(username, password, callback){
   }
 }))
 
+//
 passport.serializeUser((user,callback)=>{
   callback(null,user)
 });
 
+//
 passport.deserializeUser((user,callback)=>{
   callback(null,user)
 })

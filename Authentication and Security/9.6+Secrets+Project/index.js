@@ -4,9 +4,10 @@ import pg from "pg";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import GoogleStrategy from "passport-google-oauth2";
 import session from "express-session";
 import env from "dotenv";
-import GoogleStrategy from "passport-google-oauth2"
+import e from "express";
 
 const app = express();
 const port = 3000;
@@ -20,7 +21,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -57,23 +57,48 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/secrets", (req, res) => {
-  console.log(req.user);
+app.get("/secrets", async (req, res) => {
   if (req.isAuthenticated()) {
-    res.render("secrets.ejs");
+    
+    const email = req.user.email;
+    //TODO: Update this to pull in the user secret to render in secrets.ejs
+    try{
+      const result = await db.query("select * from users where email = $1 ", [email]);
+      const secret = result.rows[0]
+      res.render("secrets.ejs", {secret: secret.secret});
+    }catch(err){
+      console.log("Query do not complete!", err.message);
+    }
   } else {
     res.redirect("/login");
   }
 });
 
-app.get("/auth/google", passport.authenticate("google",{
-  scope: ["profile", "email"],
-}))
+//TODO: Add a get route for the submit button
+app.get("/submit", (req,res)=>{
+  if(req.isAuthenticated()){
+    res.render("submit.ejs")
+  }else{
+    res.redirect("/login")
+  }
+})
 
-app.get("/auth/google/secrets", passport.authenticate("google", {
-  successRedirect: "/secrets",
-  failureRedirect: "/login"
-}))
+//Think about how the logic should work with authentication.
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+app.get(
+  "/auth/google/secrets",
+  passport.authenticate("google", {
+    successRedirect: "/secrets",
+    failureRedirect: "/login",
+  })
+);
 
 app.post(
   "/login",
@@ -116,7 +141,21 @@ app.post("/register", async (req, res) => {
   }
 });
 
+//TODO: Create the post route for submit.
+app.post("/submit", async (req,res)=>{
+  const secret = req.body.secret;
+  const email = req.user.email
+  try {
+    const result = await db.query("Update users set secret = ($1) where email = ($2)", [secret, email]);
+    res.redirect("/secrets")
+  }catch(err){
+    console.log("Query can not continue because something error in database", err.message)
+  }
+})
+//Handle the submitted data and add it to the database
+
 passport.use(
+  "local",
   new Strategy(async function verify(username, password, cb) {
     try {
       const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
@@ -127,15 +166,12 @@ passport.use(
         const storedHashedPassword = user.password;
         bcrypt.compare(password, storedHashedPassword, (err, valid) => {
           if (err) {
-            //Error with password check
             console.error("Error comparing passwords:", err);
             return cb(err);
           } else {
             if (valid) {
-              //Passed password check
               return cb(null, user);
             } else {
-              //Did not pass password check
               return cb(null, false);
             }
           }
@@ -149,30 +185,40 @@ passport.use(
   })
 );
 
-passport.use("google", new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/secrets",
-  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
-}, async (accessToken, refreshToken, profile,cb)=>{
-  console.log(profile)
-  try{
-    const result = await db.query("select * from users where email = $1", [profile.email])
-    if (result.rows.length === 0){
-      const newUser = await db.query("insert into users( email, password) values ($1,$2) ", [profile.email, "google"])
-      cb(null, newUser.rows[0]);
-    }else{
-       //already existing user
-       cb(null,result.rows[0]);
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/secrets",
+      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      try {
+        // console.log(profile);
+        const result = await db.query("SELECT * FROM users WHERE email = $1", [
+          profile.email,
+        ]);
+        if (result.rows.length === 0) {
+          const newUser = await db.query(
+            "INSERT INTO users (email, password) VALUES ($1, $2)",
+            [profile.email, "google"]
+          );
+          return cb(null, newUser.rows[0]);
+        } else {
+          return cb(null, result.rows[0]);
+        }
+      } catch (err) {
+        return cb(err);
+      }
     }
-  }catch(err){
-    cb(err);
-  }
-}))
-
+  )
+);
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
+
 passport.deserializeUser((user, cb) => {
   cb(null, user);
 });
