@@ -5,3 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 })
+
+console.log("Running on: http://localhost:5173/")
