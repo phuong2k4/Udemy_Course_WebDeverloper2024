@@ -1,0 +1,3 @@
+service : {
+  topUp: (nat) -> () oneway;
+}
